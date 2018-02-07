@@ -53,7 +53,7 @@ public class UserDaoImplementation implements UserDaoInterface {
 
                 Blob img = rs.getBlob(7);
                 InputStream s = img.getBinaryStream();
-                selectedUser = new User(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getDate(6).toString(), s, rs.getString(8), rs.getString(9), rs.getString(10), rs.getDouble(11));
+                selectedUser = new User(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getDate(6).toString(), s, rs.getString(8), rs.getString(9), rs.getString(10), rs.getDouble(11),null);
                 return selectedUser;
 
             } else {
@@ -131,7 +131,7 @@ public class UserDaoImplementation implements UserDaoInterface {
             if (rs.next()) {
                 Blob img = rs.getBlob(7);
                 InputStream s = img.getBinaryStream();
-                retrievedUser = new User(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getDate(6).toString(), s, rs.getString(8), rs.getString(9), rs.getString(10), rs.getDouble(11));
+                retrievedUser = new User(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getDate(6).toString(), s, rs.getString(8), rs.getString(9), rs.getString(10), rs.getDouble(11),null);
                 return retrievedUser;
             } else {
                 return null;
@@ -213,6 +213,38 @@ public class UserDaoImplementation implements UserDaoInterface {
         } catch (SQLException e) {
 
             e.getMessage();
+        }
+
+    }
+
+    @Override
+    public boolean checkIfEmailExists(String email) {
+
+        Connection con = null;
+        ResultSet rs = null;
+        PreparedStatement pst = null;
+
+        try {
+            con = dataSource.getConnection();
+            pst = con.prepareStatement("SELECT * FROM user WHERE userEmail = ? ", ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+
+            pst.setString(1, email);
+
+            rs = pst.executeQuery();
+
+            if (rs.next()) {
+                return true;
+
+            } else {
+
+                return false;
+
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            close(con, rs, pst);
+            return false;
+
         }
 
     }

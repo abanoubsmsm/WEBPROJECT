@@ -16,5 +16,6 @@ public interface UserDaoInterface extends ParentDao<User>{
     
     
     public User login(String email,String password );
+    public boolean checkIfEmailExists(String email);
     
 }

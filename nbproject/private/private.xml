@@ -3,10 +3,10 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/E:/pepo/iti%20%20courses/servlet/servproj/Jspproject/jspproject/src/java/child_daos_implementation/UserDaoImplementation.java</file>
-            <file>file:/E:/pepo/iti%20%20courses/servlet/servproj/Jspproject/jspproject/web/signup.jsp</file>
-            <file>file:/E:/pepo/iti%20%20courses/servlet/servproj/Jspproject/jspproject/src/java/controller_servlet/SignUpServlet.java</file>
-            <file>file:/E:/pepo/iti%20%20courses/servlet/servproj/Jspproject/jspproject/src/java/dtos/User.java</file>
+            <file>file:/E:/pepo/iti%20%20courses/servlet/the%20project/new/jspproject/web/regesterpage/registered.html</file>
+            <file>file:/E:/pepo/iti%20%20courses/servlet/the%20project/new/jspproject/src/java/controller_servlet/SignUpServlet.java</file>
+            <file>file:/E:/pepo/iti%20%20courses/servlet/the%20project/new/jspproject/web/testcookies.jsp</file>
+            <file>file:/E:/pepo/iti%20%20courses/servlet/the%20project/new/jspproject/src/java/controller_servlet/EditUserProfile.java</file>
         </group>
     </open-files>
 </project-private>

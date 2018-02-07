@@ -6,13 +6,14 @@
 package dtos;
 
 import java.io.InputStream;
+import java.util.ArrayList;
 
 /**
  *
  * @author abanoub samy
  */
 public class User {
-    
+
     private Integer userId;
     private String userName;
     private String userEmail;
@@ -24,17 +25,12 @@ public class User {
     private String userType;
     private String userJop;
     private double userCredit;
+    private ArrayList<Item> userShopCart;
 
     public User() {
-        
-        
     }
-    
-    
-    
-    
 
-    public User(Integer userId, String userName, String userEmail, String userPassword, String userAddress, String userDob, InputStream userPic, String userGender, String userType, String userJop, double userCredit) {
+    public User(Integer userId, String userName, String userEmail, String userPassword, String userAddress, String userDob, InputStream userPic, String userGender, String userType, String userJop, double userCredit, ArrayList<Item> userShopCart) {
         this.userId = userId;
         this.userName = userName;
         this.userEmail = userEmail;
@@ -46,15 +42,11 @@ public class User {
         this.userType = userType;
         this.userJop = userJop;
         this.userCredit = userCredit;
+        this.userShopCart = userShopCart;
     }
 
-    
-    
-    
-    
-    
-    public User( String userName, String userEmail, String userPassword, String userAddress, String userDob, InputStream userPic, String userGender, String userJop, double userCredit) {
-       
+    public User(String userName, String userEmail, String userPassword, String userAddress, String userDob, InputStream userPic, String userGender, String userJop, double userCredit, ArrayList<Item> userShopCart) {
+
         this.userName = userName;
         this.userEmail = userEmail;
         this.userPassword = userPassword;
@@ -64,9 +56,8 @@ public class User {
         this.userGender = userGender;
         this.userJop = userJop;
         this.userCredit = userCredit;
+        this.userShopCart = userShopCart;
     }
-
-    
 
     /**
      * @return the userId
@@ -222,8 +213,18 @@ public class User {
         this.userCredit = userCredit;
     }
 
-    
-    
-    
-    
+    /**
+     * @return the userShopCart
+     */
+    public ArrayList<Item> getUserShopCart() {
+        return userShopCart;
+    }
+
+    /**
+     * @param userShopCart the userShopCart to set
+     */
+    public void setUserShopCart(ArrayList<Item> userShopCart) {
+        this.userShopCart = userShopCart;
+    }
+
 }

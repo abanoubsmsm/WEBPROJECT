@@ -79,10 +79,10 @@ public class ControllerServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-         File initialFile = new File("C:\\Users\\abanoub samy\\Desktop\\bob.jpg");
-         InputStream targetStream = new FileInputStream(initialFile);
-        User u =new User( "abanoub", "abanoubsamy4@yahoo.com", "1234", "8yt el 3nb","1995-01-21", targetStream, "male", "programmer", 20000);
-        
+//         File initialFile = new File("C:\\Users\\abanoub samy\\Desktop\\bob.jpg");
+//         InputStream targetStream = new FileInputStream(initialFile);
+//        User u =new User( "abanoub", "abanoubsamy4@yahoo.com", "1234", "8yt el 3nb","1995-01-21", targetStream, "male", "programmer", 20000);
+//        
        // userImpl.insert(u);
        
       /* User rUser = userImpl.login("abanoubsamy4@yahoo.com","1234");
