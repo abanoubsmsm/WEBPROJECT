@@ -12,9 +12,11 @@ import java.io.PrintWriter;
 import javax.annotation.Resource;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.sql.DataSource;
 
 /**
@@ -96,15 +98,58 @@ public class LoginServlet extends HttpServlet {
         
         
         String userEmail = request.getParameter("userEmail");
-        String password = request.getParameter("password");
+        String password = request.getParameter("userPassword");
         
            User newUser = new User();
         
          newUser=userImpl.login(userEmail,password);
          
+         
+         if(newUser!=null)
+         {
+         
            System.out.println(newUser.getUserGender());
            System.out.println(newUser.getUserId());
            System.out.println(newUser.getUserName());
+           
+           
+              
+            //create session
+            
+            HttpSession userSession = request.getSession(true);
+            userSession.setAttribute("logedInUser", newUser);
+            
+            
+           
+            //create cookies
+            
+             
+             Cookie emailCookie = new Cookie("userEmail", newUser.getUserEmail());
+             Cookie passCookie = new Cookie("userPass", newUser.getUserPassword());
+             
+             emailCookie.setMaxAge(60*60*24*7);
+             passCookie.setMaxAge(60*60*24*7);
+             
+             response.addCookie(emailCookie);
+             response.addCookie(passCookie);
+             
+             //el satr elly gai dah test bs 
+             
+            // response.sendRedirect("testcookies.jsp");
+            
+            
+         }
+         
+         
+         else
+         {
+             
+             
+             //user not exist in data base
+             
+             response.sendRedirect("loginpage/login.jsp?notUser");
+             
+         }
         
     }
 
