@@ -37,6 +37,7 @@ public class LoginServlet extends HttpServlet {
      */
     
     
+    //Mayada
     @Resource(name = "jdbc/eCommerce")
     private DataSource dataSource;
     
