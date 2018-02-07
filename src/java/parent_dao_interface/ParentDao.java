@@ -20,5 +20,6 @@ public interface ParentDao <T>{
     public T select(T t);
     public boolean update(T t);
     public ArrayList<T> convertResultSetToArrayList(ResultSet rs);
+    public ArrayList<T> reterieveAll ();
     
 }

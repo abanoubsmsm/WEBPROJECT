@@ -12,6 +12,10 @@
         <servlet-name>EditUserProfile</servlet-name>
         <servlet-class>controller_servlet.EditUserProfile</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>AdminShowUsers</servlet-name>
+        <servlet-class>controller_servlet.AdminShowUsers</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>ControllerServlet</servlet-name>
         <url-pattern>/ControllerServlet</url-pattern>
@@ -23,6 +27,10 @@
     <servlet-mapping>
         <servlet-name>EditUserProfile</servlet-name>
         <url-pattern>/EditUserProfile</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AdminShowUsers</servlet-name>
+        <url-pattern>/AdminShowUsers</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

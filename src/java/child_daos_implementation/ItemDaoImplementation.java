@@ -163,4 +163,9 @@ public class ItemDaoImplementation implements ItemDaoInterface{
     public ArrayList<Item> convertResultSetToArrayList(ResultSet rs) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+
+    @Override
+    public ArrayList<Item> reterieveAll() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }

@@ -53,7 +53,7 @@ public class UserDaoImplementation implements UserDaoInterface {
 
                 Blob img = rs.getBlob(7);
                 InputStream s = img.getBinaryStream();
-                selectedUser = new User(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getDate(6).toString(), s, rs.getString(8), rs.getString(9), rs.getString(10), rs.getDouble(11),null);
+                selectedUser = new User(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getDate(6).toString(), s, rs.getString(8), rs.getString(9), rs.getString(10), rs.getDouble(11), null);
                 return selectedUser;
 
             } else {
@@ -131,7 +131,7 @@ public class UserDaoImplementation implements UserDaoInterface {
             if (rs.next()) {
                 Blob img = rs.getBlob(7);
                 InputStream s = img.getBinaryStream();
-                retrievedUser = new User(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getDate(6).toString(), s, rs.getString(8), rs.getString(9), rs.getString(10), rs.getDouble(11),null);
+                retrievedUser = new User(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getDate(6).toString(), s, rs.getString(8), rs.getString(9), rs.getString(10), rs.getDouble(11), null);
                 return retrievedUser;
             } else {
                 return null;
@@ -188,7 +188,30 @@ public class UserDaoImplementation implements UserDaoInterface {
 
     @Override
     public ArrayList<User> convertResultSetToArrayList(ResultSet rs) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
+        
+        try {
+            ArrayList<User> users = new ArrayList<>();
+            while (rs.next()) {
+//                InputStream s = null;
+//                Blob img = rs.getBlob(7);
+//                if(img!=null)
+//                {
+//                s = img.getBinaryStream();
+//                
+//                }
+                User retrievedUser = new User(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getDate(6).toString(), null, rs.getString(8), rs.getString(9), rs.getString(10), rs.getDouble(11), null);
+                users.add(retrievedUser);
+            }
+
+            return users;
+
+            //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        } catch (SQLException ex) {
+            
+            Logger.getLogger(UserDaoImplementation.class.getName()).log(Level.SEVERE, null, ex);
+            return  null;
+        }
     }
 
     private void close(Connection con, ResultSet rs, PreparedStatement pst) {
@@ -249,4 +272,30 @@ public class UserDaoImplementation implements UserDaoInterface {
 
     }
 
+    @Override
+    public ArrayList<User> reterieveAll() {
+        ArrayList<User> users = null;
+
+        Connection con = null;
+        ResultSet rs = null;
+        PreparedStatement pst = null;
+
+        try {
+            con = dataSource.getConnection();
+            pst = con.prepareStatement("SELECT * FROM user", ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+
+            rs = pst.executeQuery();
+            
+           if(rs!=null)
+            {
+              users = convertResultSetToArrayList(rs);
+            }
+            // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        } catch (SQLException ex) {
+            Logger.getLogger(UserDaoImplementation.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return users;
+
+    }
 }
