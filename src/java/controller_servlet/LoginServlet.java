@@ -120,7 +120,9 @@ public class LoginServlet extends HttpServlet {
             HttpSession userSession = request.getSession(true);
             userSession.setAttribute("logedInUser", newUser);
             
+            //test el edit profile 
             
+            response.sendRedirect("edituserprofile/edituserprof.jsp");
            
             //create cookies
             
@@ -137,6 +139,7 @@ public class LoginServlet extends HttpServlet {
              //el satr elly gai dah test bs 
              
             // response.sendRedirect("testcookies.jsp");
+            
             
             
          }

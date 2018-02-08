@@ -98,7 +98,7 @@ public class SignUpServlet extends HttpServlet {
        // String dob = request.getParameter("data of birth");
         String userGender = request.getParameter("userGender");
         String userJob = request.getParameter("userJop");
-      //  Double userCredit = Double.valueOf(request.getParameter("userCredit"));
+       Double userCredit = Double.valueOf(request.getParameter("userCredit"));
 
         System.out.println(userName);
         System.out.println(userEmail);
@@ -107,7 +107,7 @@ public class SignUpServlet extends HttpServlet {
        // System.out.println(dob);
         System.out.println(userGender);
         System.out.println(userJob);
-      //  System.out.println(userCredit);
+        System.out.println(userCredit);
    
         if (userImpl.checkIfEmailExists(userEmail)) {
             
@@ -124,7 +124,7 @@ public class SignUpServlet extends HttpServlet {
            // newUser.setUserDob(dob);
             newUser.setUserGender(userGender);
             newUser.setUserJop(userJob);
-           // newUser.setUserCredit(userCredit);
+            newUser.setUserCredit(userCredit);
             newUser.setUserPic(null);
 
             if (userImpl.insert(newUser)) {

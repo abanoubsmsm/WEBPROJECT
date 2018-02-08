@@ -50,9 +50,13 @@ public class UserDaoImplementation implements UserDaoInterface {
             rs = pst.executeQuery();
 
             if (rs.next()) {
-
+                InputStream s = null;
                 Blob img = rs.getBlob(7);
-                InputStream s = img.getBinaryStream();
+
+                if (img != null) {
+                    s = img.getBinaryStream();
+                }
+
                 selectedUser = new User(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getDate(6).toString(), s, rs.getString(8), rs.getString(9), rs.getString(10), rs.getDouble(11), null);
                 return selectedUser;
 
@@ -155,27 +159,26 @@ public class UserDaoImplementation implements UserDaoInterface {
 
             con = dataSource.getConnection();
             pst = con.prepareStatement("UPDATE user SET"
-                    + " userName = ? , userEmail = ? ,userPassword = ?"
+                    + " userName = ? ,userPassword = ?,"
                     + "userAddress = ? ,userDob = ? ,userPic = ?, "
                     + "userGender = ? ,userJop = ? ,userCredit = ? ", ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
 
             pst.setString(1, t.getUserName());
-            pst.setString(2, t.getUserEmail());
-            pst.setString(3, t.getUserPassword());
-            pst.setString(4, t.getUserAddress());
-            pst.setString(5, t.getUserDob());
-            pst.setBlob(6, t.getUserPic());
-            pst.setString(7, t.getUserGender());
-            pst.setString(8, t.getUserJop());
-            pst.setDouble(9, t.getUserCredit());
+            pst.setString(2, t.getUserPassword());
+            pst.setString(3, t.getUserAddress());
+            pst.setString(4, t.getUserDob());
+            pst.setBlob(5, t.getUserPic());
+            pst.setString(6, t.getUserGender());
+            pst.setString(7, t.getUserJop());
+            pst.setDouble(8, t.getUserCredit());
 
             pst.executeUpdate();
 
             return true;
 
-        } catch (SQLException ex) {
+        } catch (Exception ex) {
 
-            ex.getMessage();
+            ex.printStackTrace();
             Logger.getLogger(UserDaoImplementation.class.getName()).log(Level.SEVERE, null, ex);
             return false;
         } finally {
@@ -188,8 +191,7 @@ public class UserDaoImplementation implements UserDaoInterface {
 
     @Override
     public ArrayList<User> convertResultSetToArrayList(ResultSet rs) {
-        
-        
+
         try {
             ArrayList<User> users = new ArrayList<>();
             while (rs.next()) {
@@ -208,9 +210,9 @@ public class UserDaoImplementation implements UserDaoInterface {
 
             //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
         } catch (SQLException ex) {
-            
+
             Logger.getLogger(UserDaoImplementation.class.getName()).log(Level.SEVERE, null, ex);
-            return  null;
+            return null;
         }
     }
 
@@ -285,10 +287,9 @@ public class UserDaoImplementation implements UserDaoInterface {
             pst = con.prepareStatement("SELECT * FROM user", ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
 
             rs = pst.executeQuery();
-            
-           if(rs!=null)
-            {
-              users = convertResultSetToArrayList(rs);
+
+            if (rs != null) {
+                users = convertResultSetToArrayList(rs);
             }
             // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
         } catch (SQLException ex) {
