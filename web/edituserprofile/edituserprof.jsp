@@ -247,40 +247,39 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 
                     %>
                     <form action="../EditUserProfile" method="post">
-                        <input type="text" placeholder="Name..." required=" " name="userName" value=<%=u.getUserName()%> >
-                        <input type="text" placeholder="Address..." required=" " name="userAddress" value=<%=u.getUserAddress()%>>
-                        <input type="text" placeholder="Jop..." required=" " name="userJop" value=<%=u.getUserJop()%>>
+
+
+                        <input type="text" placeholder="Name..."  name="userName" value="<%=u.getUserName()%>" >
+                        <input type="text" placeholder="Address..."  name="userAddress" value="<%=u.getUserAddress()%>">
+                        <input type="text" placeholder="Jop..."  name="userJop" value="<%=u.getUserJop()%>">
                         <br>
-                        <input type="text" placeholder="Credit..." required=" " name="userCredit"value=<%=u.getUserCredit()%> >
+                        <input type="text" placeholder="Credit..."  name="userCredit"value="<%=u.getUserCredit()%>" >
                         <br>
-<!--                        <%
-                        String male ="unchecked";
-                        String female = "unchecked";
-                        if(u.getUserGender().equals("male"))
-                        {
-                            male = "checked";
-                          //  out.print("maleeeeee");
-                        }
-                        else
-                        {
-                            
-                            female ="checked";
-                            // out.print("femaleeeeee");
-                        }
-                        
+                        <%
+
+                            if (u.getUserGender().equals("male")) {
+
+                                out.println("<input type=radio name=userGender value=male checked > male");
+                                out.println("<br><br>");
+                                out.println("<input type=radio name=userGender value=female > female");
+                            } else {
+
+                                out.println("<input type=radio name=gender value=male  > male");
+                                out.println("<br><br>");
+                                out.println("<input type=radio name=gender value=female checked > female");
+                            }
+
                         %>
-                        <input type="radio" name="gender" value="male" > male
-                        <br><br>
-                        <input type="radio" name="gender" value="female" > female-->
+
 
 
 
 
                         <h6>Change Password</h6>
-                        <input type="hidden" placeholder="Email"  name="userEmail" value=<%=u.getUserEmail()%>>
+                        <input type="hidden"  name="userEmail" value=<%=u.getUserEmail()%>>
 
-                        <input type="password" placeholder="Password" required=" " name ="userPassword" value=<%=u.getUserPassword()%> >
-                        <input type="password" placeholder="Password Confirmation" required=" " value=<%=u.getUserPassword()%>>
+                        <input type="password"  name ="userPassword" value=<%=u.getUserPassword()%> >
+                        <input type="password"  required=" " value=<%=u.getUserPassword()%>>
 
                         <input type="submit" value="Save">
                     </form>

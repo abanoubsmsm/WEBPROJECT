@@ -103,7 +103,9 @@ public class EditUserProfile extends HttpServlet {
         String userEmail = request.getParameter("userEmail");
         String password = request.getParameter("userPassword");
         String address = request.getParameter("userAddress");
+        String userGender = request.getParameter("userGender");
         String userJob = request.getParameter("userJop");
+        
         Double userCredit = Double.valueOf(request.getParameter("userCredit"));
         
         System.out.println(userName);
@@ -119,7 +121,7 @@ public class EditUserProfile extends HttpServlet {
             newUser.setUserEmail(userEmail);
             newUser.setUserPassword(password);
             newUser.setUserAddress(address);
-            newUser.setUserGender("male");
+            newUser.setUserGender(userGender);
             newUser.setUserJop(userJob);
             newUser.setUserCredit(userCredit);
            

@@ -161,7 +161,8 @@ public class UserDaoImplementation implements UserDaoInterface {
             pst = con.prepareStatement("UPDATE user SET"
                     + " userName = ? ,userPassword = ?,"
                     + "userAddress = ? ,userDob = ? ,userPic = ?, "
-                    + "userGender = ? ,userJop = ? ,userCredit = ? ", ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+                    + "userGender = ? ,userJop = ? ,userCredit = ? "
+                    +"where userEmail = ?", ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
 
             pst.setString(1, t.getUserName());
             pst.setString(2, t.getUserPassword());
@@ -171,6 +172,7 @@ public class UserDaoImplementation implements UserDaoInterface {
             pst.setString(6, t.getUserGender());
             pst.setString(7, t.getUserJop());
             pst.setDouble(8, t.getUserCredit());
+            pst.setString(9,t.getUserEmail());
 
             pst.executeUpdate();
 
