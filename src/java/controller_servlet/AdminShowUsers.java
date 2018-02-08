@@ -10,7 +10,10 @@ import dtos.User;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.annotation.Resource;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -32,21 +35,18 @@ public class AdminShowUsers extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    
-    
-    
     @Resource(name = "jdbc/eCommerce")
     private DataSource dataSource;
-    
+
     private UserDaoImplementation userImpl;
-    
-    
+
     @Override
-     public void init() {
-        
-        userImpl =new UserDaoImplementation(dataSource);
-        
+    public void init() {
+
+        userImpl = new UserDaoImplementation(dataSource);
+
     }
+
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
@@ -55,7 +55,7 @@ public class AdminShowUsers extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet AdminShowUsers</title>");            
+            out.println("<title>Servlet AdminShowUsers</title>");
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Servlet AdminShowUsers at " + request.getContextPath() + "</h1>");
@@ -76,17 +76,12 @@ public class AdminShowUsers extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        //processRequest(request, response);
-       
-        ArrayList<User> users = null;
-        users=userImpl.reterieveAll();
-        if(users!=null){
-         for (int i=0;i<users.size();i++) {
-             System.out.println(users.get(i).getUserEmail());
-             
-         }
+        try {
+            listUsers(request, response);
+        } catch (Exception ex) {
+            Logger.getLogger(AdminShowUsers.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
     }
 
     /**
@@ -112,5 +107,22 @@ public class AdminShowUsers extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
+
+    private void listUsers(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+
+        // get users from UserDaoImplementation
+        ArrayList<User> users = null;
+        users = userImpl.reterieveAll();
+
+        // add users to the request
+        request.setAttribute("User_LIST", users);
+
+        // send to JSP page (view)
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/listusers/listUsersToAdmin.jsp");
+        dispatcher.forward(request, response);
+       
+
+    }
 
 }
