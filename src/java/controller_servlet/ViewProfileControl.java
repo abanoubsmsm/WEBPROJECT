@@ -10,6 +10,8 @@ import dtos.User;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.annotation.Resource;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -24,65 +26,41 @@ import javax.sql.DataSource;
  */
 public class ViewProfileControl extends HttpServlet {
 
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    
-    
-     @Resource(name = "jdbc/eCommerce")
+    @Resource(name = "jdbc/eCommerce")
     private DataSource dataSource;
-
+    
     private UserDaoImplementation userImpl;
-
+    
     @Override
     public void init() {
-
+        
         userImpl = new UserDaoImplementation(dataSource);
-
+        
     }
-
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+  
+    
+     @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet ViewProfileControl</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet ViewProfileControl at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
-        }
+        doGet(request, response);
     }
-
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /**
-     * Handles the HTTP <code>GET</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
+   
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         //processRequest(request, response);
         
-        try {
+       
 			
 			String theCommand = request.getParameter("command");
-			
-			
+			String button1 = request.getParameter("Search");
+                       System.out.println(theCommand);
+                       System.out.println(button1);
+                        
+                       //if (button1 != null) {
+                            
+                        
+			System.out.println(theCommand);
 			if (theCommand == null) {
 				theCommand = "LIST";
 			}
@@ -91,90 +69,102 @@ public class ViewProfileControl extends HttpServlet {
 			switch (theCommand) {
 			
 			case "LIST":
-				listUsers(request, response);
+                            
+                                try {
+                                    listUsers(request, response);
+                                } catch (Exception ex) {
+                                    Logger.getLogger(ViewProfileControl.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                            
 				break;
 				
-			case "LOAD":
-				loadUsers(request, response);
+			case "SELECTONE":
+                            
+                                try {
+                                    loadSelectedUser(request, response);
+                                } catch (Exception ex) {
+                                    Logger.getLogger(ViewProfileControl.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                            
+				break;
+                                
+                        case "LOAD":
+                            
+                                try {
+                                    loadUsers(request, response);
+                                } catch (Exception ex) {
+                                    Logger.getLogger(ViewProfileControl.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                            
 				break;
 				
 			default:
-				listUsers(request, response);
-			}
-				
-		}
-		catch (Exception exc) {
-			throw new ServletException(exc);
-		}
-		
-        
-        
-        
+                            {
+                                try {
+                                    listUsers(request, response);
+                                } catch (Exception ex) {
+                                    Logger.getLogger(ViewProfileControl.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                            }
+			}   
     }
 
-    /**
-     * Handles the HTTP <code>POST</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        processRequest(request, response);
-    }
-
-    /**
-     * Returns a short description of the servlet.
-     *
-     * @return a String containing servlet description
-     */
-    @Override
-    public String getServletInfo() {
-        return "Short description";
-    }// </editor-fold>
-
-
-
-    private void listUsers(HttpServletRequest request, HttpServletResponse response)throws Exception  {
+ 
+    private void listUsers(HttpServletRequest request, HttpServletResponse response) throws Exception {
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
+        ArrayList<User> users = null;
+        users = userImpl.reterieveAll();
+        
+        request.setAttribute("Users_LIST", users);
+        
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/listusers/listUsersToAdmin.jsp");
+        dispatcher.forward(request, response);
+        
+    }
     
-     
-		 ArrayList<User> users = null;
-                 users = userImpl.reterieveAll();
-		
-	
-		request.setAttribute("Users_LIST", users);
-				
-		
+    private void loadUsers(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
+        String theUserMail = request.getParameter("usermail");
+        
+        User t = new User();
+        t.setUserEmail(theUserMail);
+        t = userImpl.select(t);
+        System.out.println(t.getUserId());
+        System.out.println(t.getUserCredit());
+        request.setAttribute("ViewedUser",t);
+        RequestDispatcher dispatcher = request.getRequestDispatcher("listusers/viewUserProfile.jsp");
+        dispatcher.forward(request, response);
+       
+        
+        
+    }
+    
+    
+    
+      private void loadSelectedUser(HttpServletRequest request, HttpServletResponse response) throws Exception{
+       // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    
+     ArrayList<User> t = new ArrayList<>();
+       
+     String theUserMail = request.getParameter("Search");
+     //String theUserName = request.getParameter("username");
+     User e= new User();
+      
+               e.setUserEmail(theUserMail);
+       //t.setUserName(theUserName);
+       e=userImpl.select(e);
+       t.add(e);
+       
+       System.out.println(theUserMail);
+       System.out.println("bbbbbbbbbbbbbbbbbbbbbh");
+       request.setAttribute("User_LIST", t);
+       
+               
 		RequestDispatcher dispatcher = request.getRequestDispatcher("/listusers/listUsersToAdmin.jsp");
 		dispatcher.forward(request, response);
     
     }
-
-    private void loadUsers(HttpServletRequest request, HttpServletResponse response) throws Exception  {
-       // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-   
-       String theUserMail = request.getParameter("usermail");
-       
-       User t=new  User();
-       t.setUserEmail(theUserMail);
-       t=userImpl.select(t);
-       
-       request.setAttribute("ViewedUser", t);
-       
-       RequestDispatcher dispatcher = request.getRequestDispatcher("/listusers/viewUserProfile.jsp");
-		dispatcher.forward(request, response);
-       
-       
-               System.out.println(t.getUserId());
-               System.out.println(t.getUserCredit());
-               
     
-    
-    
-    }
-
 }

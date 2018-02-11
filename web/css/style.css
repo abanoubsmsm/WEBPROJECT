@@ -125,12 +125,34 @@ button.btn.btn-default.search:hover {
     background:#333;
 	
 }
+.agile-edit-help {
+    float: left;
+    width: 40%;
+    text-align: right;
+    padding: 9px 0;
+}
+
+
+.agile-edit-help ul li {
+    display: inline-block;
+    padding: 0em 1em;
+}
+.agile-edit-help ul li a {
+    font-size: 1em;
+    text-transform: capitalize;
+    color: #fff;
+    text-decoration: none;
+}
+
+
 .agile-login {
     float: left;
     width: 40%;
-    text-align: center;
+    text-align: right;
     padding: 9px 0;
 }
+
+
 .agile-login ul li {
     display: inline-block;
     padding: 0em 1em;

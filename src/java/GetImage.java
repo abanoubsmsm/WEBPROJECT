@@ -1,3 +1,4 @@
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -39,16 +40,23 @@ public class GetImage extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         try {
-            response.setContentType("image/jpg");
+            response.setContentType("image/png");
             String id = request.getParameter("name");
             Class.forName("com.mysql.jdbc.Driver");
             Connection con=DriverManager.getConnection(
                     "jdbc:mysql://localhost:3306/e_commerce","root","");
             ItemDaoImplementation item=  new ItemDaoImplementation();
             item.setCon(con);
-            ArrayList<Item> list =  item.getItem(25);
-            response.getOutputStream().write(list.get(5).getItem_pic());
-            System.out.println("size = "+list.size());
+            
+            Item i = new Item();
+            System.out.println("id is"+id);
+            if(id.matches("^[0-9]+$"))
+            {
+                i.setItem_id(Integer.parseInt(id));
+            }
+            i = item.select(i);
+            response.getOutputStream().write(i.getItem_pic());
+           
            
         }   catch (ClassNotFoundException ex) {
             Logger.getLogger(GetImage.class.getName()).log(Level.SEVERE, null, ex);
@@ -97,3 +105,4 @@ public class GetImage extends HttpServlet {
     }// </editor-fold>
 
 }
+

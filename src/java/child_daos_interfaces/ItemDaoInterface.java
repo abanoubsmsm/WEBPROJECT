@@ -1,3 +1,4 @@
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -23,7 +24,13 @@ public interface ItemDaoInterface extends ParentDao<Item>{
     String ITEM_PRICE = "price";
     String ITEM_VENDOR = "vendor_id";
 
-    ArrayList<Item> getItem(int index)throws SQLException;
+    public ArrayList<Item> getItem(int index)throws SQLException;
 
-    boolean decrementItem(int itemId)throws SQLException;
+    public boolean decrementItem(int itemId)throws SQLException;
+    
+    
+    public boolean deleteItem(int itemId)throws SQLException;
+    
+    public ArrayList<Item> getItemByName(String nameToSearch)throws SQLException;
 }
+

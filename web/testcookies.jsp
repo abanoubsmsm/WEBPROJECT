@@ -14,34 +14,29 @@
     </head>
     <body>
         <h1>Hello World!</h1>
-        
+
         <%
-            
-            User u =(User)session.getAttribute("logedInUser");
+
+            User u = (User) session.getAttribute("logedInUser");
             out.print(u.getUserName());
-            Cookie cookies[]=request.getCookies();
-            
-if(cookies!=null)
-{
-    
-   for(Cookie temp : cookies)
-   {
-       
-      if( temp.getName().equals("userEmail"))
-      {
-          
-          out.print(temp.getValue());
-      }
-      else if(temp.getName().equals("userPass"))
-      {
-          out.print(temp.getValue());
-          
-      }
-       
-   }
-    
-}
-            
-            %>
+            Cookie cookies[] = request.getCookies();
+
+            if (cookies != null) {
+
+                for (Cookie temp : cookies) {
+
+                    if (temp.getName().equals("userEmail")) {
+
+                        out.print(temp.getValue());
+                    } else if (temp.getName().equals("userPass")) {
+                        out.print(temp.getValue());
+
+                    }
+
+                }
+
+            }
+
+        %>
     </body>
 </html>

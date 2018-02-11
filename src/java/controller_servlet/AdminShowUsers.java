@@ -119,7 +119,7 @@ public class AdminShowUsers extends HttpServlet {
         request.setAttribute("User_LIST", users);
 
         // send to JSP page (view)
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/listusers/listUsersToAdmin.jsp");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("listusers/listUsersToAdmin.jsp");
         dispatcher.forward(request, response);
        
 

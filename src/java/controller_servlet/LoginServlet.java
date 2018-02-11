@@ -122,7 +122,7 @@ public class LoginServlet extends HttpServlet {
             
             //test el edit profile 
             
-            response.sendRedirect("edituserprofile/edituserprof.jsp");
+           // response.sendRedirect("edituserprofile/edituserprof.jsp");
            
             //create cookies
             
@@ -138,7 +138,7 @@ public class LoginServlet extends HttpServlet {
              
              //el satr elly gai dah test bs 
              
-            // response.sendRedirect("testcookies.jsp");
+             response.sendRedirect("HomeServlet");
             
             
             

@@ -6,6 +6,7 @@
 
 import child_daos_implementation.ItemDaoImplementation;
 import dtos.Item;
+import dtos.User;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
@@ -14,11 +15,14 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import utils.ArrayUtail;
 
 /**
  *
@@ -38,6 +42,10 @@ public class GetData extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+         HttpSession session = request.getSession(true);
+        User user = new User();
+        user.setUserShopCart(new ArrayList<>());
+        session.setAttribute("user", user);
         try {
             response.setContentType("text/html;charset=UTF-8");
             Class.forName("com.mysql.jdbc.Driver");
@@ -46,7 +54,12 @@ public class GetData extends HttpServlet {
             ItemDaoImplementation item=  new ItemDaoImplementation();
             item.setCon(con);
             ArrayList<Item> list = item.getItem(0);
-            
+            System.out.println(list.size());
+            System.out.println(ArrayUtail.getArray(list).size());
+            request.setAttribute("list", ArrayUtail.getArray(list));
+           
+            RequestDispatcher d = request.getRequestDispatcher("/products.jsp");
+            d.forward(request, response);
             try (PrintWriter out = response.getWriter()) {
                 /* TODO output your page here. You may use following sample code. */
                 out.println("<!DOCTYPE html>");
