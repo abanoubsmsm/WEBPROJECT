@@ -80,7 +80,7 @@ public class LoginServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+       // doPost(request, response);
     }
 
     /**
@@ -136,7 +136,7 @@ public class LoginServlet extends HttpServlet {
              response.addCookie(emailCookie);
              response.addCookie(passCookie);
              
-             //el satr elly gai dah test bs 
+         
              
              response.sendRedirect("HomeServlet");
             
@@ -157,14 +157,5 @@ public class LoginServlet extends HttpServlet {
         
     }
 
-    /**
-     * Returns a short description of the servlet.
-     *
-     * @return a String containing servlet description
-     */
-    @Override
-    public String getServletInfo() {
-        return "Short description";
-    }// </editor-fold>
-
+   
 }

@@ -3,8 +3,12 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/E:/pepo/iti%20%20courses/servlet/the%20project/new/jspproject/web/products.jsp</file>
+            <file>file:/E:/pepo/iti%20%20courses/servlet/the%20project/new/jspproject/web/not_found_page/notfound.jsp</file>
             <file>file:/E:/pepo/iti%20%20courses/servlet/the%20project/new/jspproject/src/java/controller_servlet/itemtoedit.java</file>
+            <file>file:/E:/pepo/iti%20%20courses/servlet/the%20project/new/jspproject/src/java/controller_servlet/AdminShowUsers.java</file>
+            <file>file:/E:/pepo/iti%20%20courses/servlet/the%20project/new/jspproject/web/WEB-INF/web.xml</file>
+            <file>file:/E:/pepo/iti%20%20courses/servlet/the%20project/new/jspproject/src/java/controller_servlet/ViewProfileControl.java</file>
+            <file>file:/E:/pepo/iti%20%20courses/servlet/the%20project/new/jspproject/src/java/filter/RunServletFirst.java</file>
         </group>
     </open-files>
 </project-private>

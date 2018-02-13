@@ -82,7 +82,7 @@ public class SearchProduct extends HttpServlet {
       //  processRequest(request, response);
       
       String nameToSearch = request.getParameter("Search");
-      
+        System.out.println("b555555555"+nameToSearch);
       if(nameToSearch.trim()!=null)
       {
           
@@ -100,13 +100,12 @@ public class SearchProduct extends HttpServlet {
               request.setAttribute("result",resultItems);
               
              // response.sendRedirect("HomeServlet?res");
+             
+            
               RequestDispatcher dis = request.getRequestDispatcher("HomeServlet?res");
-              
               dis.forward(request, response);
               
-          } catch (ClassNotFoundException ex) {
-              Logger.getLogger(SearchProduct.class.getName()).log(Level.SEVERE, null, ex);
-          } catch (SQLException ex) {
+          } catch (ClassNotFoundException | SQLException ex) {
               Logger.getLogger(SearchProduct.class.getName()).log(Level.SEVERE, null, ex);
           }
           

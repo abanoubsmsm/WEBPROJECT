@@ -37,8 +37,8 @@ public class itemtoedit extends HttpServlet {
 
         try {
             
-           Item i =(Item) request.getAttribute("h");
-            System.out.println("hobaaaaaaaaaaaaaa"+i.getItem_name());
+//           Item i =(Item) request.getAttribute("h");
+//            System.out.println("hobaaaaaaaaaaaaaa"+i.getItem_name());
             Class.forName("com.mysql.jdbc.Driver");
             Connection con = DriverManager.getConnection(
                     "jdbc:mysql://localhost:3306/e_commerce", "root", "");
@@ -49,14 +49,21 @@ public class itemtoedit extends HttpServlet {
 
             myItem = item.select(myItem);
 
+            if(myItem!=null)
+            {
             request.setAttribute("selectedItem", myItem);
             RequestDispatcher rd = request.getRequestDispatcher("editroduct/editproduct.jsp");
 
             rd.forward(request, response);
+            
+            }
+            else
+            {
+                
+              response.sendError(404);
+            }
 
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(itemtoedit.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException ex) {
+        } catch (ClassNotFoundException | SQLException ex) {
             Logger.getLogger(itemtoedit.class.getName()).log(Level.SEVERE, null, ex);
         }
 

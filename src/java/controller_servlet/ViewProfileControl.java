@@ -146,25 +146,38 @@ public class ViewProfileControl extends HttpServlet {
       private void loadSelectedUser(HttpServletRequest request, HttpServletResponse response) throws Exception{
        // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     
-     ArrayList<User> t = new ArrayList<>();
-       
-     String theUserMail = request.getParameter("Search");
-     //String theUserName = request.getParameter("username");
-     User e= new User();
-      
-               e.setUserEmail(theUserMail);
-       //t.setUserName(theUserName);
-       e=userImpl.select(e);
-       t.add(e);
-       
-       System.out.println(theUserMail);
-       System.out.println("bbbbbbbbbbbbbbbbbbbbbh");
-       request.setAttribute("User_LIST", t);
-       
-               
-		RequestDispatcher dispatcher = request.getRequestDispatcher("/listusers/listUsersToAdmin.jsp");
-		dispatcher.forward(request, response);
-    
+    ArrayList<User> t = new ArrayList<>();
+
+        String theUserMail = request.getParameter("Search");
+        //String theUserName = request.getParameter("username");
+        User e = new User();
+
+        e.setUserEmail(theUserMail);
+        //t.setUserName(theUserName);
+        e = userImpl.select(e);
+
+        //System.out.println("11111111111111");
+
+        if (e == null) {
+
+           // System.out.println("222222222222222");
+
+            ArrayList<User> users = null;
+            users = userImpl.reterieveAll();
+            // add users to the request
+            request.setAttribute("User_LIST", users);
+            // send to JSP page (view)
+            RequestDispatcher dispatcher = request.getRequestDispatcher("listusers/listUsersToAdmin.jsp?notUser");
+            dispatcher.forward(request, response);
+
+        } else {
+            t.add(e);
+            System.out.println(theUserMail);
+            System.out.println("bbbbbbbbbbbbbbbbbbbbbh");
+            request.setAttribute("User_LIST", t);
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/listusers/listUsersToAdmin.jsp");
+            dispatcher.forward(request, response);
+        }
     }
     
 }

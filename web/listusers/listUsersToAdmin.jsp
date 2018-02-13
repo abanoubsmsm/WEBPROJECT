@@ -84,13 +84,11 @@
                     <h1><a href="HomeServlet">super Market</a></h1>
                 </div>
                 
-                
-                  <div class="w3l_search">
+                <div class="w3l_search">
                     <form id="formm" action="/ViewProfileControl" method="post">
-
                         <input type="search" name="Search" placeholder="Search for a User..." required="" id="inputMail">
                         <button type="submit" class="btn btn-default search" aria-label="Left Align" onclick="fn1()">
-                            <i class="fa fa-search" aria-hidden="true" > </i>
+                        <i class="fa fa-search" aria-hidden="true"> </i>
                         </button>
 
                         <script language="JavaScript" type="text/JavaScript">
@@ -100,6 +98,8 @@
                             function fn1()
                             {
                             var neww = document.getElementById("inputMail").value;
+                            
+                            
                             <c:url var="temp" value="ViewProfileControl">
                             <c:param name="command" value="SELECTONE"/>
                             <c:param name="usermail" value="${neww}"/>
@@ -108,11 +108,24 @@
                             document.getElementById("formm").submit();
                             }
                         </script>
-                        <div class="clearfix"></div>
-
+                        <div class="clearfix"> 
+                        </div>
                     </form>
                 </div>
                 
+                 <%
+                    String query = request.getQueryString();
+                    
+                    if(query!=null&&query.equals("notUser"))
+                    {
+                    
+                    out.println("<div class='wronguser'><p>");
+                    out.println("There is no user by this Email");
+                    out.println("</p></div>");
+                    }
+
+                %>
+                 
                 <div class="clearfix"> </div>
             </div>
         </div>

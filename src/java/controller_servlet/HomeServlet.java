@@ -10,7 +10,6 @@ import child_daos_implementation.UserDaoImplementation;
 import dtos.Item;
 import dtos.User;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -56,13 +55,11 @@ public class HomeServlet extends HttpServlet {
 
     }
 
-  
-   
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         try {
-            
+
             Class.forName("com.mysql.jdbc.Driver");
             Connection con = DriverManager.getConnection(
                     "jdbc:mysql://localhost:3306/e_commerce", "root", "");
@@ -71,80 +68,75 @@ public class HomeServlet extends HttpServlet {
             ArrayList<Item> list = item.getItem(0);
             System.out.println(list.size());
             System.out.println(ArrayUtail.getArray(list).size());
-            
+
             request.setAttribute("list", ArrayUtail.getArray(list));
-            
-            
-            
-            
+
             checkLogIn(request, response);
-          
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(HomeServlet.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException ex) {
+
+        } catch (ClassNotFoundException | SQLException ex) {
             Logger.getLogger(HomeServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
 
     }
 
-    
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-       // processRequest(request, response);
-       
-       
+
         String check = request.getQueryString();
-            if(check!=null&&check.equals("res"))
-            {
-            
-            ArrayList<Item> list2 =(ArrayList<Item>) request.getAttribute("result");
+        if (check != null && check.equals("res")) {
+
+            ArrayList<Item> list2 = (ArrayList<Item>) request.getAttribute("result");
             request.setAttribute("list", ArrayUtail.getArray(list2));
-            
-            
-                checkLogIn(request, response);
-            
-            }
-       
+            checkLogIn(request, response);
+
+        }
+
     }
 
-    public void checkLogIn(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
-    {
-        
-        
-          
-            Cookie cookies[] = request.getCookies();
-            
-            if (cookies != null) {
-                
-                User newUser = new User();
-                for (Cookie temp : cookies) {
-                    
-                    if (temp.getName().equals("userEmail")) {
-                        
-                        newUser.setUserEmail(temp.getValue());
-                        newUser = userImpl.select(newUser);
-                        HttpSession userSession = request.getSession(true);
-                        userSession.setAttribute("logedInUser", newUser);
-                        if (newUser.getUserType().equals("user")) {
-                            
-                            RequestDispatcher d = request.getRequestDispatcher("/products.jsp?logedIn=true");
-                            d.forward(request, response);
-                            //response.sendRedirect("products.jsp?logedIn=true");
-                        } else {
-                             RequestDispatcher d = request.getRequestDispatcher("/products.jsp?logedIn=true&admin=true");
-                            d.forward(request, response);
-                           // response.sendRedirect("products.jsp?logedIn=true&admin=true");
-                        }
-                        
+    public void checkLogIn(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+        Cookie cookies[] = request.getCookies();
+
+        if (cookies != null) {
+            boolean isTomcatCookie = true;
+            User newUser = new User();
+            for (Cookie temp : cookies) {
+
+                if (temp.getName().equals("userEmail")) {
+                    isTomcatCookie = false;
+                    newUser.setUserEmail(temp.getValue());
+                    newUser = userImpl.select(newUser);
+                    HttpSession userSession = request.getSession(true);
+                    userSession.setAttribute("logedInUser", newUser);
+                    if (newUser.getUserType().equals("user")) {
+
+                        RequestDispatcher d = request.getRequestDispatcher("/products.jsp?logedIn=true");
+                        d.forward(request, response);
+                        //response.sendRedirect("products.jsp?logedIn=true");
+                    } else {
+                        RequestDispatcher d = request.getRequestDispatcher("/products.jsp?logedIn=true&admin=true");
+                        d.forward(request, response);
+                        // response.sendRedirect("products.jsp?logedIn=true&admin=true");
                     }
+
                 }
-                
-            } 
-            
-            else {
-                response.sendRedirect("../products.jsp");
-                
+
+               
             }
+            
+            
+             if (isTomcatCookie) {
+
+                    RequestDispatcher d = request.getRequestDispatcher("/products.jsp");
+                    d.forward(request, response);
+                }
+
+        } else {
+
+            RequestDispatcher d = request.getRequestDispatcher("/products.jsp");
+            d.forward(request, response);
+
+        }
     }
 }
