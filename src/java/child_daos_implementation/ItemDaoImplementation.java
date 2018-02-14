@@ -20,6 +20,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.sql.DataSource;
 import utils.ImageUtils;
 
 /**
@@ -31,8 +32,14 @@ public class ItemDaoImplementation implements ItemDaoInterface {
     private Connection con;
     PreparedStatement statemnt;
     ResultSet res;
+    private DataSource dataSource;
 
     public ItemDaoImplementation() {
+
+    }
+
+    public ItemDaoImplementation(DataSource dataSource) {
+        this.dataSource = dataSource;
     }
 
     public void close() {
@@ -220,9 +227,8 @@ public class ItemDaoImplementation implements ItemDaoInterface {
 
             ex.printStackTrace();
             return false;
-        }
-        finally{
-            
+        } finally {
+
             close();
         }
 
@@ -231,11 +237,13 @@ public class ItemDaoImplementation implements ItemDaoInterface {
     @Override
     public ArrayList<Item> getItemByName(String nameToSearch) throws SQLException {
 
-       
-           ArrayList<Item> list = new ArrayList<>();
+        ArrayList<Item> list = new ArrayList<>();
+
+        con = dataSource.getConnection();
+
         statemnt = con.prepareStatement("SELECT  qubtity, price, item_name, item_id, catagory, pic FROM item where item_name like ?");
-      
-        statemnt.setString(1, "%"+nameToSearch+"%");
+
+        statemnt.setString(1, "%" + nameToSearch + "%");
         res = statemnt.executeQuery();
         while (res.next()) {
             try {
@@ -258,7 +266,90 @@ public class ItemDaoImplementation implements ItemDaoInterface {
         }
         return list;
 
+    }
 
+    @Override
+    public ArrayList<Item> getItemByCat(String catToSearch) throws SQLException {
+        ArrayList<Item> list = new ArrayList<>();
+        Connection con = null;
+        ResultSet rs = null;
+        PreparedStatement pst = null;
+
+        try {
+
+            con = dataSource.getConnection();
+
+            pst = con.prepareStatement("select * from item where catagory = ?");
+
+            pst.setString(1, catToSearch);
+
+            res = pst.executeQuery();
+
+            while (res.next()) {
+                try {
+                    Item item = new Item();
+                    item.setItem_id(res.getInt(ITEM_ID));
+                    item.setItem_catagory(res.getString(ITEM_CATAGORY));
+                    item.setItem_name(res.getString(ITEM_NAME));
+                    Blob b = res.getBlob(ITEM_PIC);
+                    byte[] bytes = getBytes(b);
+                    item.setItem_pic(bytes);
+                    item.setItem_quntity(res.getInt(ITEM_QUTITY));
+                    item.setItem_price(res.getInt(ITEM_PRICE));
+
+                    list.add(item);
+
+                } catch (IOException ex) {
+                    Logger.getLogger(ItemDaoImplementation.class.getName()).log(Level.SEVERE, null, ex);
+                }
+
+            }
+
+            return list;
+        } catch (Exception ex) {
+
+            ex.printStackTrace();
+            return null;
+
+        } finally {
+
+            close();
+        }
+
+    }
+
+    @Override
+    public ArrayList<Item> getItemByPrice(int from, int to) throws SQLException {
+
+        ArrayList<Item> list = new ArrayList<>();
+
+        con = dataSource.getConnection();
+
+        statemnt = con.prepareStatement("SELECT  qubtity, price, item_name, item_id, catagory, pic FROM item where price between ? and ?");
+
+        statemnt.setInt(1, from);
+        statemnt.setInt(2, to);
+        res = statemnt.executeQuery();
+        while (res.next()) {
+            try {
+                Item item = new Item();
+                item.setItem_id(res.getInt(ITEM_ID));
+                item.setItem_catagory(res.getString(ITEM_CATAGORY));
+                item.setItem_name(res.getString(ITEM_NAME));
+                Blob b = res.getBlob(ITEM_PIC);
+                byte[] bytes = getBytes(b);
+                item.setItem_pic(bytes);
+                item.setItem_quntity(res.getInt(ITEM_QUTITY));
+                item.setItem_price(res.getInt(ITEM_PRICE));
+
+                list.add(item);
+
+            } catch (IOException ex) {
+                Logger.getLogger(ItemDaoImplementation.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+        }
+        return list;
 
     }
 }

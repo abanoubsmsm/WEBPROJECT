@@ -6,6 +6,7 @@
 package controller_servlet;
 
 import child_daos_implementation.ItemDaoImplementation;
+import child_daos_implementation.UserDaoImplementation;
 import dtos.Item;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -15,11 +16,13 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.annotation.Resource;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.sql.DataSource;
 
 /**
  *
@@ -36,6 +39,19 @@ public class SearchProduct extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
+    @Resource(name = "jdbc/eCommerce")
+    private DataSource dataSource;
+
+    private ItemDaoImplementation itemImpl;
+
+    @Override
+
+    public void init() {
+
+        itemImpl = new ItemDaoImplementation(dataSource);
+
+    }
+
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
@@ -44,7 +60,7 @@ public class SearchProduct extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet SearchProduct</title>");            
+            out.println("<title>Servlet SearchProduct</title>");
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Servlet SearchProduct at " + request.getContextPath() + "</h1>");
@@ -68,59 +84,72 @@ public class SearchProduct extends HttpServlet {
         processRequest(request, response);
     }
 
-    /**
-     * Handles the HTTP <code>POST</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-      //  processRequest(request, response);
-      
-      String nameToSearch = request.getParameter("Search");
-        System.out.println("b555555555"+nameToSearch);
-      if(nameToSearch.trim()!=null)
-      {
-          
-          try {
-              Class.forName("com.mysql.jdbc.Driver");
-              Connection con = DriverManager.getConnection(
-                      "jdbc:mysql://localhost:3306/e_commerce", "root", "");
-              ItemDaoImplementation item = new ItemDaoImplementation();
-              item.setCon(con);
-              
-             ArrayList<Item> resultItems =  item.getItemByName(nameToSearch);
-             
-             // System.out.println("item nameeeeeeeee"+resultItems.get(0).getItem_name());
-              
-              request.setAttribute("result",resultItems);
-              
-             // response.sendRedirect("HomeServlet?res");
-             
-            
-              RequestDispatcher dis = request.getRequestDispatcher("HomeServlet?res");
-              dis.forward(request, response);
-              
-          } catch (ClassNotFoundException | SQLException ex) {
-              Logger.getLogger(SearchProduct.class.getName()).log(Level.SEVERE, null, ex);
-          }
-          
-      }
-      
+
+        String searchMethod = request.getParameter("serachMethod");
+        System.out.println("search method ....  " + searchMethod);
+        switch (searchMethod) {
+
+            case "search by name":
+
+                searchByName(request, response);
+
+                break;
+
+            case "search by price":
+        {
+            try {
+                searchByPrice(request, response);
+            } catch (SQLException ex) {
+                Logger.getLogger(SearchProduct.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+                break;
+
+        }
+
     }
 
-    /**
-     * Returns a short description of the servlet.
-     *
-     * @return a String containing servlet description
-     */
-    @Override
-    public String getServletInfo() {
-        return "Short description";
-    }// </editor-fold>
+    private void searchByName(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+        String nameToSearch = request.getParameter("Search");
+
+        if (nameToSearch.trim() != null) {
+
+            try {
+
+                ArrayList<Item> resultItems = itemImpl.getItemByName(nameToSearch);
+
+                // System.out.println("item nameeeeeeeee"+resultItems.get(0).getItem_name());
+                request.setAttribute("result", resultItems);
+
+                // response.sendRedirect("HomeServlet?res");
+                RequestDispatcher dis = request.getRequestDispatcher("HomeServlet?res");
+                dis.forward(request, response);
+
+            } catch (SQLException ex) {
+                Logger.getLogger(SearchProduct.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+        }
+
+    }
+
+    private void searchByPrice(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException {
+
+        int from = Integer.parseInt(request.getParameter("from"));
+        int to = Integer.parseInt(request.getParameter("to"));
+
+        ArrayList<Item> resultItems = itemImpl.getItemByPrice(from, to);
+
+        // System.out.println("item nameeeeeeeee"+resultItems.get(0).getItem_name());
+        request.setAttribute("result", resultItems);
+
+        // response.sendRedirect("HomeServlet?res");
+        RequestDispatcher dis = request.getRequestDispatcher("HomeServlet?res");
+        dis.forward(request, response);
+    }
 
 }

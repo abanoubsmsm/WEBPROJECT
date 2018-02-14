@@ -132,13 +132,13 @@
         <dispatcher>INCLUDE</dispatcher>
         <dispatcher>ERROR</dispatcher>
     </filter-mapping>
-    <!--    <filter-mapping>
+        <filter-mapping>
         <filter-name>FilterAll</filter-name>
         <servlet-name>HomeServlet</servlet-name>
         <dispatcher>REQUEST</dispatcher> 
         <dispatcher>INCLUDE</dispatcher>
         <dispatcher>ERROR</dispatcher>
-    </filter-mapping>-->
+    </filter-mapping>
     <filter-mapping>
         <filter-name>FilterAll</filter-name>
         <url-pattern>/edituserprofile/edituserprof.jsp</url-pattern>

@@ -47,17 +47,37 @@ public class HomeServlet extends HttpServlet {
 
     private UserDaoImplementation userImpl;
 
+    private ItemDaoImplementation itemImpl;
+
     @Override
 
     public void init() {
 
         userImpl = new UserDaoImplementation(dataSource);
+        itemImpl = new ItemDaoImplementation(dataSource);
 
     }
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+
+        String theCommand = request.getParameter("command");
+
+        if (theCommand != null) {
+
+            System.out.println("the commaands"+theCommand);
+            try {
+                showListByCategory(request,response);
+            } catch (SQLException ex) {
+                Logger.getLogger(HomeServlet.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+        }
+        
+        else
+        {
+
         try {
 
             Class.forName("com.mysql.jdbc.Driver");
@@ -76,13 +96,17 @@ public class HomeServlet extends HttpServlet {
         } catch (ClassNotFoundException | SQLException ex) {
             Logger.getLogger(HomeServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
-
+        }
     }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
+        
+        
+        
+        
         String check = request.getQueryString();
         if (check != null && check.equals("res")) {
 
@@ -122,15 +146,13 @@ public class HomeServlet extends HttpServlet {
 
                 }
 
-               
             }
-            
-            
-             if (isTomcatCookie) {
 
-                    RequestDispatcher d = request.getRequestDispatcher("/products.jsp");
-                    d.forward(request, response);
-                }
+            if (isTomcatCookie) {
+
+                RequestDispatcher d = request.getRequestDispatcher("/products.jsp");
+                d.forward(request, response);
+            }
 
         } else {
 
@@ -139,4 +161,17 @@ public class HomeServlet extends HttpServlet {
 
         }
     }
+
+    public void showListByCategory(HttpServletRequest request,HttpServletResponse response) throws SQLException, ServletException, IOException {
+     
+        String categoryName = request.getParameter("categoryName");
+        
+        ArrayList<Item> list = itemImpl.getItemByCat(categoryName);
+
+        request.setAttribute("list", ArrayUtail.getArray(list));
+
+        checkLogIn(request, response);
+
+    }
+
 }

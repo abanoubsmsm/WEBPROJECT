@@ -32,5 +32,8 @@ public interface ItemDaoInterface extends ParentDao<Item>{
     public boolean deleteItem(int itemId)throws SQLException;
     
     public ArrayList<Item> getItemByName(String nameToSearch)throws SQLException;
+    public ArrayList<Item> getItemByPrice(int from , int to)throws SQLException;
+    
+    public ArrayList<Item> getItemByCat(String catToSearch)throws SQLException;
 }
 

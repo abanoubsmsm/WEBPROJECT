@@ -80,6 +80,12 @@
 
         <div class="logo_products">
             <div class="container">
+                  <div class="w3ls_logo_products_left1">
+                    <ul class="phone_email">
+                        <li><i class="fa fa-phone" aria-hidden="true"></i>Order online or call us : (+0123) 234 567</li>
+
+                    </ul>
+                </div>
                 <div align="right" class="w3ls_logo_products_left" >
                     <h1><a href="HomeServlet">super Market</a></h1>
                 </div>

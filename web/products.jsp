@@ -122,14 +122,41 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                 <div class="w3ls_logo_products_left">
                     <h1><a href="index.html">super Market</a></h1>
                 </div>
+
+
                 <div class="w3l_search">
                     <form action="SearchProduct" method="post">
+
+                        <select name ="serachMethod">
+                            <option>search by name</option>
+
+                            <option>search by price</option>
+
+                        </select>
+                        
+                        <select name ="from">
+                            
+                            <option>100</option>
+
+                            <option>1000</option>
+
+                        </select>
+                        
+                        <select name ="to">
+                            <option>1000</option>
+
+                            <option>2000</option>
+
+                        </select>
+                        
                         <input type="search" name="Search" placeholder="Search for a Product..." required="">
                         <button type="submit" class="btn btn-default search" aria-label="Left Align">
                             <i class="fa fa-search" aria-hidden="true"> </i>
                         </button>
                         <div class="clearfix"></div>
                     </form>
+                    
+                   
                 </div>
 
                 <div class="clearfix"> </div>
@@ -277,37 +304,28 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                     <div class="categories">
                         <h2>Categories</h2>
                         <ul class="cate">
-                            <li><a href="products.html"><i class="fa fa-arrow-right" aria-hidden="true"></i>Fruits And Vegetables</a></li>
-                            <ul>
-                                <li><a href="products.html"><i class="fa fa-arrow-right" aria-hidden="true"></i>Cuts & Sprouts</a></li>
-                                <li><a href="products.html"><i class="fa fa-arrow-right" aria-hidden="true"></i>Flowers</a></li>
-                                <li><a href="products.html"><i class="fa fa-arrow-right" aria-hidden="true"></i>Fresh Herbs & Seasonings</a></li>
-                                <li><a href="products.html"><i class="fa fa-arrow-right" aria-hidden="true"></i>Fresh Vegetables</a> </li>
-                                <li><a href="products.html"><i class="fa fa-arrow-right" aria-hidden="true"></i>International Vegetables</a> </li>
-                                <li><a href="products.html"><i class="fa fa-arrow-right" aria-hidden="true"></i>Organic Fruits & Vegetables</a></li>
-                            </ul>
-                            <li><a href="products.html"><i class="fa fa-arrow-right" aria-hidden="true"></i>Grocery & Staples</a></li>
-                            <ul>
-                                <li><a href="products.html"><i class="fa fa-arrow-right" aria-hidden="true"></i>Dals & Pulses</a> </li>
-                                <li><a href="products.html"><i class="fa fa-arrow-right" aria-hidden="true"></i>Dry Fruits</a> </li>
-                                <li><a href="products.html"><i class="fa fa-arrow-right" aria-hidden="true"></i>Edible Oils & Ghee</a> </li>
-                                <li><a href="products.html"><i class="fa fa-arrow-right" aria-hidden="true"></i>Flours & Sooji</a> </li>
-                                <li><a href="products.html"><i class="fa fa-arrow-right" aria-hidden="true"></i>Masalas & Spices</a> </li>
-                                <li><a href="products.html"><i class="fa fa-arrow-right" aria-hidden="true"></i>Organic Staples</a> </li>
-                                <li><a href="products.html"><i class="fa fa-arrow-right" aria-hidden="true"></i>Rice & Rice Products</a> </li>
-                                <li><a href="products.html"><i class="fa fa-arrow-right" aria-hidden="true"></i>Salt, Sugar & Jaggery</a></li>
-                            </ul>
-                            <li><a href="products.html"><i class="fa fa-arrow-right" aria-hidden="true"></i>PersonalCare</a></li>
-                            <ul>
-                                <li><a href="products.html"><i class="fa fa-arrow-right" aria-hidden="true"></i>Baby Care</a> </li>
-                                <li><a href="products.html"><i class="fa fa-arrow-right" aria-hidden="true"></i>Cosmetics</a> </li>
-                                <li><a href="products.html"><i class="fa fa-arrow-right" aria-hidden="true"></i>Deos & Perfumes</a> </li>
-                                <li><a href="products.html"><i class="fa fa-arrow-right" aria-hidden="true"></i>Skin Care</a> </li>
-                                <li><a href="products.html"><i class="fa fa-arrow-right" aria-hidden="true"></i>Sanitary Needs</a> </li>
-                                <li><a href="products.html"><i class="fa fa-arrow-right" aria-hidden="true"></i>Oral Care</a> </li>
-                                <li><a href="products.html"><i class="fa fa-arrow-right" aria-hidden="true"></i>Personal Hygiene</a> </li>
-                                <li><a href="products.html"><i class="fa fa-arrow-right" aria-hidden="true"></i>Shaving Needs</a></li>
-                            </ul>
+
+                            <c:url var="tempLink1" value="HomeServlet">
+                                <c:param name="command" value="cat" />
+                                <c:param name="categoryName" value="Mobiles" />
+                            </c:url>
+
+                            <li><a href="${tempLink1}"><i class="fa fa-arrow-right" aria-hidden="true"></i>Mobiles</a></li>
+
+
+                            <c:url var="tempLink2" value="HomeServlet">
+                                <c:param name="command" value="cat" />
+                                <c:param name="categoryName" value="Cars" />
+                            </c:url>
+                            <li><a href="${tempLink2}"><i class="fa fa-arrow-right" aria-hidden="true"></i>Cars</a></li>
+
+
+                            <c:url var="tempLink3" value="HomeServlet">
+                                <c:param name="command" value="cat" />
+                                <c:param name="categoryName" value="Furniture" />
+                            </c:url>
+                            <li><a href="${tempLink3}"><i class="fa fa-arrow-right" aria-hidden="true"></i>Furniture</a></li>
+
                         </ul>
                     </div>																																												
                 </div>
@@ -345,8 +363,9 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                                                     <div class="snipcart-item block">
                                                         <div class="snipcart-thumb">
                                                             <a href="single.html"><img title=" " alt=" " src="GetImage?name=${item.item_id}"width="100" height="100"></a>		
-                                                            <p>${item.item_name}</p>
-                                                            <h4>"${item.item_price}"</h4>
+                                                            <p> ${item.item_name}</p>
+                                                            <p> price :${item.item_price}</p>
+                                                            <p>category :${item.item_catagory}</p>
                                                         </div>
                                                         <div class="snipcart-details top_brand_home_details">
 
@@ -418,147 +437,147 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                                                             <!-- top-header and slider -->
                                                             <!-- here stars scrolling icon -->
                                                             <script type="text/javascript">
-                                                                                                                    $(document).ready(function () {
-                                                                                                                        /*
-                                                                                                                         var defaults = {
-                                                                                                                         containerID: 'toTop', // fading element id
-                                                                                                                         containerHoverID: 'toTopHover', // fading element hover id
-                                                                                                                         scrollSpeed: 1200,
-                                                                                                                         easingType: 'linear' 
-                                                                                                                         };
-                                                                                                                         */
+                                                                $(document).ready(function () {
+                                                                    /*
+                                                                     var defaults = {
+                                                                     containerID: 'toTop', // fading element id
+                                                                     containerHoverID: 'toTopHover', // fading element hover id
+                                                                     scrollSpeed: 1200,
+                                                                     easingType: 'linear' 
+                                                                     };
+                                                                     */
 
-                                                                                                                        $().UItoTop({easingType: 'easeOutQuart'});
+                                                                    $().UItoTop({easingType: 'easeOutQuart'});
 
-                                                                                                                    });
+                                                                });
                                                             </script>
                                                             <!-- //here ends scrolling icon -->
                                                             <script src="js/minicart.min.js"></script>
                                                             <script>
-                                                                                                                    // Mini Cart
+                                                                // Mini Cart
 
 
-                                                                                                                    if (~window.location.search.indexOf('reset=true')) {
-                                                                                                                        paypal.minicart.reset();
-                                                                                                                    }
+                                                                if (~window.location.search.indexOf('reset=true')) {
+                                                                    paypal.minicart.reset();
+                                                                }
                                                             </script>
                                                             <!-- main slider-banner -->
                                                             <script src="js/skdslider.min.js"></script>
                                                             <link href="css/skdslider.css" rel="stylesheet">
                                                             <script type="text/javascript">
-                                                                                                                    jQuery(document).ready(function () {
-                                                                                                                        jQuery('#demo1').skdslider({'delay': 5000, 'animationSpeed': 2000, 'showNextPrev': true, 'showPlayButton': true, 'autoSlide': true, 'animationType': 'fading'});
+                                                                jQuery(document).ready(function () {
+                                                                    jQuery('#demo1').skdslider({'delay': 5000, 'animationSpeed': 2000, 'showNextPrev': true, 'showPlayButton': true, 'autoSlide': true, 'animationType': 'fading'});
 
-                                                                                                                        jQuery('#responsive').change(function () {
-                                                                                                                            $('#responsive_wrapper').width(jQuery(this).val());
-                                                                                                                        });
+                                                                    jQuery('#responsive').change(function () {
+                                                                        $('#responsive_wrapper').width(jQuery(this).val());
+                                                                    });
 
-                                                                                                                    });
-                                                                                                                    function addItem(itemName, itemPrice, ItemQuntity)
-                                                                                                                    {
-                                                                                                                        //console.log(itemName + itemPrice + ItemQuntity);
-                                                                                                                        var para = document.createElement("div");
-                                                                                                                        para.id = "div";
-                                                                                                                        para.className = "form-group row";
-                                                                                                                        var name = document.createElement("label");
-                                                                                                                        name.id = "name";
-                                                                                                                        name.className = "col-sm-2 col-form-label";
-                                                                                                                        var node = document.createTextNode(itemName);
-                                                                                                                        name.appendChild(node);
-                                                                                                                        var price = document.createElement("label");
-                                                                                                                        price.id = "price";
-                                                                                                                        price.className = "col-sm-2 col-form-label";
-                                                                                                                        node = document.createTextNode(itemPrice.toString());
-                                                                                                                        price.appendChild(node);
-                                                                                                                        var quntity = document.createElement("label");
-                                                                                                                        quntity.id = "quntity";
-                                                                                                                        quntity.className = "col-sm-2 col-form-label";
-                                                                                                                        node = document.createTextNode(1);
-                                                                                                                        var buttonIncrement = document.createElement("button");
-                                                                                                                        buttonIncrement.className = "col-sm-2 col-form-label";
-                                                                                                                        buttonIncrement.style.width = "30px";
-                                                                                                                        buttonIncrement.style.height = "30px";
-                                                                                                                        var plus = document.createElement("img");
-                                                                                                                        plus.src = "images/plus.png";
-                                                                                                                        plus.style.width = "30px";
-                                                                                                                        plus.style.height = "30px";
-                                                                                                                        buttonIncrement.appendChild(plus);
-                                                                                                                        buttonIncrement.onclick = function () {
-                                                                                                                            increment(this.parentNode);
-                                                                                                                        };
-                                                                                                                        var buttonDecrment = document.createElement("button");
-                                                                                                                        buttonDecrment.onclick = function () {
-                                                                                                                            decrement(this.parentNode);
-                                                                                                                        };
-                                                                                                                        buttonDecrment.className = "col-sm-2 col-form-label";
-                                                                                                                        buttonDecrment.style.width = "30px";
-                                                                                                                        buttonDecrment.style.height = "30px";
-                                                                                                                        var plus = document.createElement("img");
-                                                                                                                        plus.src = "images/munis.png";
-                                                                                                                        plus.style.width = "30px";
-                                                                                                                        plus.style.height = "30px";
-                                                                                                                        buttonDecrment.appendChild(plus);
-                                                                                                                        quntity.appendChild(node);
-                                                                                                                        var buttonclose = document.createElement("button");
-                                                                                                                        buttonclose.className = "col-sm-2 col-form-label";
-                                                                                                                        buttonclose.style.width = "30px";
-                                                                                                                        buttonclose.style.height = "30px";
-                                                                                                                        var plus = document.createElement("img");
-                                                                                                                        plus.src = "images/delete.png";
-                                                                                                                        plus.style.width = "30px";
-                                                                                                                        plus.style.height = "30px";
+                                                                });
+                                                                function addItem(itemName, itemPrice, ItemQuntity)
+                                                                {
+                                                                    //console.log(itemName + itemPrice + ItemQuntity);
+                                                                    var para = document.createElement("div");
+                                                                    para.id = "div";
+                                                                    para.className = "form-group row";
+                                                                    var name = document.createElement("label");
+                                                                    name.id = "name";
+                                                                    name.className = "col-sm-2 col-form-label";
+                                                                    var node = document.createTextNode(itemName);
+                                                                    name.appendChild(node);
+                                                                    var price = document.createElement("label");
+                                                                    price.id = "price";
+                                                                    price.className = "col-sm-2 col-form-label";
+                                                                    node = document.createTextNode(itemPrice.toString());
+                                                                    price.appendChild(node);
+                                                                    var quntity = document.createElement("label");
+                                                                    quntity.id = "quntity";
+                                                                    quntity.className = "col-sm-2 col-form-label";
+                                                                    node = document.createTextNode(1);
+                                                                    var buttonIncrement = document.createElement("button");
+                                                                    buttonIncrement.className = "col-sm-2 col-form-label";
+                                                                    buttonIncrement.style.width = "30px";
+                                                                    buttonIncrement.style.height = "30px";
+                                                                    var plus = document.createElement("img");
+                                                                    plus.src = "images/plus.png";
+                                                                    plus.style.width = "30px";
+                                                                    plus.style.height = "30px";
+                                                                    buttonIncrement.appendChild(plus);
+                                                                    buttonIncrement.onclick = function () {
+                                                                        increment(this.parentNode);
+                                                                    };
+                                                                    var buttonDecrment = document.createElement("button");
+                                                                    buttonDecrment.onclick = function () {
+                                                                        decrement(this.parentNode);
+                                                                    };
+                                                                    buttonDecrment.className = "col-sm-2 col-form-label";
+                                                                    buttonDecrment.style.width = "30px";
+                                                                    buttonDecrment.style.height = "30px";
+                                                                    var plus = document.createElement("img");
+                                                                    plus.src = "images/munis.png";
+                                                                    plus.style.width = "30px";
+                                                                    plus.style.height = "30px";
+                                                                    buttonDecrment.appendChild(plus);
+                                                                    quntity.appendChild(node);
+                                                                    var buttonclose = document.createElement("button");
+                                                                    buttonclose.className = "col-sm-2 col-form-label";
+                                                                    buttonclose.style.width = "30px";
+                                                                    buttonclose.style.height = "30px";
+                                                                    var plus = document.createElement("img");
+                                                                    plus.src = "images/delete.png";
+                                                                    plus.style.width = "30px";
+                                                                    plus.style.height = "30px";
 
-                                                                                                                        buttonclose.appendChild(plus);
-                                                                                                                        buttonclose.onclick = function () {
-                                                                                                                            removeItem(this.parentNode);
-                                                                                                                        };
-                                                                                                                        var hPrice = document.createElement("label");
-                                                                                                                        node = document.createTextNode(itemPrice);
-                                                                                                                        hPrice.hidden = "true";
-                                                                                                                        hPrice.id = "RealPrice";
-                                                                                                                        hPrice.appendChild(node)
-                                                                                                                        para.appendChild(name);
-                                                                                                                        para.appendChild(quntity);
-                                                                                                                        para.appendChild(hPrice);
-                                                                                                                        para.appendChild(price);
-                                                                                                                        para.appendChild(buttonIncrement);
-                                                                                                                        para.appendChild(buttonDecrment);
-                                                                                                                        para.appendChild(buttonclose);
+                                                                    buttonclose.appendChild(plus);
+                                                                    buttonclose.onclick = function () {
+                                                                        removeItem(this.parentNode);
+                                                                    };
+                                                                    var hPrice = document.createElement("label");
+                                                                    node = document.createTextNode(itemPrice);
+                                                                    hPrice.hidden = "true";
+                                                                    hPrice.id = "RealPrice";
+                                                                    hPrice.appendChild(node)
+                                                                    para.appendChild(name);
+                                                                    para.appendChild(quntity);
+                                                                    para.appendChild(hPrice);
+                                                                    para.appendChild(price);
+                                                                    para.appendChild(buttonIncrement);
+                                                                    para.appendChild(buttonDecrment);
+                                                                    para.appendChild(buttonclose);
 
-                                                                                                                        document.getElementById("card").appendChild(para);
+                                                                    document.getElementById("card").appendChild(para);
 
-                                                                                                                    }
-                                                                                                                    function removeItem(item)
-                                                                                                                    {
-                                                                                                                        document.getElementById("card").removeChild(item);
-                                                                                                                    }
-                                                                                                                    function increment(b)
-                                                                                                                    {
-                                                                                                                        var label = b.childNodes.item(1);
-                                                                                                                        var Realprice = b.childNodes.item(2);
-                                                                                                                        var price = b.childNodes.item(3);
-                                                                                                                        var x = new XMLHttpRequest();
-                                                                                                                        x.open("POST", "ShopCard", true);
-                                                                                                                        x.send();
-                                                                                                                        var count = label.textContent;
-                                                                                                                        price.textContent = (parseInt(Realprice.textContent) * (parseInt(count) + 1));
-                                                                                                                        console.log(count);
-                                                                                                                        label.textContent = (parseInt(count) + 1) + "";
-                                                                                                                    }
-                                                                                                                    function decrement(b)
-                                                                                                                    {
-                                                                                                                        var label = b.childNodes.item(1);
-                                                                                                                        var count = label.textContent;
-                                                                                                                        console.log(count);
-                                                                                                                        if (parseInt(count) > 0)
-                                                                                                                        {
-                                                                                                                            var Realprice = b.childNodes.item(2);
-                                                                                                                            var price = b.childNodes.item(3);
-                                                                                                                            label.textContent = (parseInt(count) - 1) + "";
-                                                                                                                            price.textContent = (parseInt(Realprice.textContent) * (parseInt(count) - 1));
-                                                                                                                        }
+                                                                }
+                                                                function removeItem(item)
+                                                                {
+                                                                    document.getElementById("card").removeChild(item);
+                                                                }
+                                                                function increment(b)
+                                                                {
+                                                                    var label = b.childNodes.item(1);
+                                                                    var Realprice = b.childNodes.item(2);
+                                                                    var price = b.childNodes.item(3);
+                                                                    var x = new XMLHttpRequest();
+                                                                    x.open("POST", "ShopCard", true);
+                                                                    x.send();
+                                                                    var count = label.textContent;
+                                                                    price.textContent = (parseInt(Realprice.textContent) * (parseInt(count) + 1));
+                                                                    console.log(count);
+                                                                    label.textContent = (parseInt(count) + 1) + "";
+                                                                }
+                                                                function decrement(b)
+                                                                {
+                                                                    var label = b.childNodes.item(1);
+                                                                    var count = label.textContent;
+                                                                    console.log(count);
+                                                                    if (parseInt(count) > 0)
+                                                                    {
+                                                                        var Realprice = b.childNodes.item(2);
+                                                                        var price = b.childNodes.item(3);
+                                                                        label.textContent = (parseInt(count) - 1) + "";
+                                                                        price.textContent = (parseInt(Realprice.textContent) * (parseInt(count) - 1));
+                                                                    }
 
-                                                                                                                    }
+                                                                }
                                                             </script>	
                                                             <!-- //main slider-banner --> 
                                                             <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">

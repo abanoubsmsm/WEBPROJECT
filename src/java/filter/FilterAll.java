@@ -27,6 +27,7 @@ import javax.sql.DataSource;
  */
 public class FilterAll implements Filter {
 
+    int i=0;
     @Resource(name = "jdbc/eCommerce")
     private DataSource dataSource;
 
@@ -43,7 +44,7 @@ public class FilterAll implements Filter {
             FilterChain chain)
             throws IOException, ServletException {
 
-        System.out.println("ana fy el filteeeerr");
+        System.out.println("ana fy el filteeeerr"+i++);
         HttpServletRequest req = (HttpServletRequest) request;
         HttpServletResponse res = (HttpServletResponse) response;
         Cookie cookies[] = req.getCookies();
